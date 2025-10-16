@@ -51,6 +51,7 @@ Siga as instruções do menu interativo:
 
 
 ##📌 Exemplo de Uso
+```bash
 ========================================
            TOTEM FLEXMEDIA
 ========================================
