@@ -68,9 +68,19 @@ def cadastrar_informacao(lista):
         print(VERDE + f'\n✅ Informação cadastrada com sucesso! Total de cadastros: {total}\n' + RESET)
         time.sleep(0.5)
 
-        # Pergunta se quer cadastrar mais
-        continuar = input('Deseja cadastrar outra informação? (S/N): ').strip().upper()
-        if continuar != 'S':
+        # Pergunta se quer cadastrar mais (com validação)
+        while True:
+            continuar = input('Deseja cadastrar outra informação? (S/N): ').strip().lower()
+            if continuar in ['s', 'sim']:
+                repetir = True
+                break
+            elif continuar in ['n', 'nao', 'não']:
+                repetir = False
+                break
+            else:
+                print(VERMELHO + '\n⚠️ Resposta inválida! Digite S/N ou Sim/Não.' + RESET)
+        
+        if not repetir:
             break
 
 # Função para listar todas as informações cadastradas
