@@ -42,8 +42,32 @@ Para rodar o projeto, siga os passos abaixo no seu terminal:
 
 ```bash
 python totemflexmedia.py
+```
 
 Siga as instruções do menu interativo:
 1 para cadastrar informação  
 2 para listar informações  
 0 para sair
+
+
+##📌 Exemplo de Uso
+========================================
+           TOTEM FLEXMEDIA
+========================================
+1 - Cadastrar informação
+2 - Listar informações cadastradas
+0 - Sair
+========================================
+Escolha uma opção: 1
+
+       CADASTRO DE INFORMAÇÃO
+========================================
+Digite o título da informação: Aula de Python
+Tipos disponíveis: educativo, cultural, lazer, esportivo, informativo, tecnológico
+Digite o tipo: educativo
+Digite uma breve descrição: Aprender conceitos básicos de Python
+
+Salvando informação...
+✅ Informação cadastrada com sucesso! Total de cadastros: 1
+
+Deseja cadastrar outra informação? (S/N): N
