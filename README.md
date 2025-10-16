@@ -49,6 +49,7 @@ Siga as instruções do menu interativo:
 2 para listar informações  
 0 para sair
 
+---
 
 ##📌 Exemplo de Uso
 ```bash
