@@ -6,7 +6,6 @@ import time
 import os
 import sys
 
-# Códigos ANSI de cores
 VERDE = '\033[32m'
 VERMELHO = '\033[31m'
 AZUL = '\033[34m'
@@ -15,10 +14,8 @@ MAGENTA = '\033[35m'
 CIANO = '\033[36m'
 RESET = '\033[0m'
 
-# Lista principal que armazenará as informações
 informacoes = []
 
-# Função para limpar a tela
 def limpar_tela():
     if sys.platform == 'win32':
         os.system('cls')
@@ -26,7 +23,6 @@ def limpar_tela():
         os.system('clear')
     print('\n' * 5)
 
-# Função de carregamento animado
 def carregando(mensagem='Carregando'):
     print(AMARELO + mensagem, end='', flush=True)
     for _ in range(3):
@@ -35,7 +31,6 @@ def carregando(mensagem='Carregando'):
     time.sleep(0.5)
     print(RESET)
 
-# Função para cadastrar uma nova informação
 def cadastrar_informacao(lista):
     while True:
         limpar_tela()
@@ -63,12 +58,10 @@ def cadastrar_informacao(lista):
 
         carregando('\nSalvando informação')
 
-        # Mostra mensagem de sucesso + contador de cadastros
         total = len(lista)
         print(VERDE + f'\n✅ Informação cadastrada com sucesso! Total de cadastros: {total}\n' + RESET)
         time.sleep(0.5)
 
-        # Pergunta se quer cadastrar mais (com validação)
         while True:
             continuar = input('Deseja cadastrar outra informação? (S/N): ').strip().lower()
             if continuar in ['s', 'sim']:
@@ -83,7 +76,6 @@ def cadastrar_informacao(lista):
         if not repetir:
             break
 
-# Função para listar todas as informações cadastradas
 def listar_informacoes(lista):
     limpar_tela()
     print(CIANO + '='*40)
@@ -109,7 +101,6 @@ def listar_informacoes(lista):
 
     input('Pressione Enter para voltar ao menu...')
 
-# Menu principal
 def menu():
     while True:
         limpar_tela()
@@ -134,6 +125,5 @@ def menu():
             print(VERMELHO + '\n⚠️ Opção inválida! Tente novamente.\n' + RESET)
             time.sleep(1)
 
-# Executa o programa
 if __name__ == '__main__':
     menu()
