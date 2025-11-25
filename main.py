@@ -2,7 +2,7 @@
 # Autor: João Pedro de Souza Nunes
 # Protótipo de totem interativo com cadastro e listagem de informações
 
-from funcoes import (
+from functions import (
     cadastrar_informacao,
     listar_informacoes,
     pesquisar_por_tipo,
