@@ -1,4 +1,4 @@
-# 📘 Totem_Prototico
+# 📘 Totem_Prototipo
 
 ## 🎯 Objetivo
 Criar um protótipo de **totem inteligente interativo** em Python que oferece informações **educativo**, **cultural** e de **lazer**, permitindo o **cadastro**, **listagem** e **pesquisa** dessas informações diretamente no terminal, com cores e efeitos simples para melhorar a experiência do usuário.  
