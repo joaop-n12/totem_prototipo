@@ -4,20 +4,15 @@ import sys
 import subprocess
 import threading
 import webbrowser
-import json  # NOVO
+import json
 
-ARQUIVO = "dados.json"  # NOVO
+ARQUIVO = "dados.json"
 
 VERDE = '\033[32m'
 VERMELHO = '\033[31m'
 AMARELO = '\033[33m'
 CIANO = '\033[36m'
 RESET = '\033[0m'
-
-
-# -------------------------
-# PERSISTÊNCIA (NOVO)
-# -------------------------
 
 def carregar_dados():
     if not os.path.exists(ARQUIVO):
@@ -35,10 +30,6 @@ def salvar_dados(lista):
     with open(ARQUIVO, "w", encoding="utf-8") as f:
         json.dump(lista, f, indent=4, ensure_ascii=False)
 
-
-# -------------------------
-# FUNÇÕES EXISTENTES
-# -------------------------
 
 def limpar_tela():
     os.system('cls' if sys.platform == 'win32' else 'clear')
@@ -176,11 +167,6 @@ def pesquisar_por_tipo(lista):
             print(f'{i}. {info["Título"]} - {info["Descrição"]}')
     input('\nPressione Enter para voltar ao menu...')
 
-
-# -------------------------
-# EDIÇÃO (NOVO)
-# -------------------------
-
 def editar_informacao(lista):
     if not lista:
         print("Nenhuma informação cadastrada.")
@@ -217,11 +203,6 @@ def editar_informacao(lista):
 
     salvar_dados(lista)
     print("✅ Informação atualizada!")
-
-
-# -------------------------
-# EXCLUSÃO (NOVO)
-# -------------------------
 
 def excluir_informacao(lista):
     if not lista:
