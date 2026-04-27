@@ -4,7 +4,9 @@ import sys
 import subprocess
 import threading
 import webbrowser
+import json  # NOVO
 
+ARQUIVO = "dados.json"  # NOVO
 
 VERDE = '\033[32m'
 VERMELHO = '\033[31m'
@@ -13,8 +15,34 @@ CIANO = '\033[36m'
 RESET = '\033[0m'
 
 
+# -------------------------
+# PERSISTÊNCIA (NOVO)
+# -------------------------
+
+def carregar_dados():
+    if not os.path.exists(ARQUIVO):
+        return []
+
+    try:
+        with open(ARQUIVO, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except (json.JSONDecodeError, FileNotFoundError):
+        print("Erro ao carregar dados. Criando novo arquivo...")
+        return []
+
+
+def salvar_dados(lista):
+    with open(ARQUIVO, "w", encoding="utf-8") as f:
+        json.dump(lista, f, indent=4, ensure_ascii=False)
+
+
+# -------------------------
+# FUNÇÕES EXISTENTES
+# -------------------------
+
 def limpar_tela():
     os.system('cls' if sys.platform == 'win32' else 'clear')
+
 
 def carregando(mensagem='Carregando'):
     print(AMARELO + mensagem, end='', flush=True)
@@ -24,10 +52,13 @@ def carregando(mensagem='Carregando'):
     print(RESET)
     time.sleep(0.5)
 
+
 def perguntar_com_tempo(pergunta, tempo_limite=7):
     resposta = [None]
+
     def ler_input():
         resposta[0] = input(pergunta).strip().lower()
+
     thread = threading.Thread(target=ler_input)
     thread.start()
     thread.join(timeout=tempo_limite)
@@ -72,7 +103,6 @@ def cadastrar_informacao(lista):
         print('       CADASTRO DE INFORMAÇÃO')
         print('='*40 + RESET + '\n')
 
-        # Validação do título
         while True:
             titulo = input('Digite o título da informação: ').strip()
             if titulo:
@@ -83,7 +113,6 @@ def cadastrar_informacao(lista):
         tipos_permitidos = ['educativo', 'cultural', 'lazer']
         print('\nTipos disponíveis:', ', '.join(tipos_permitidos))
 
-        # Validação do tipo
         while True:
             tipo_input = input('Digite o tipo: ').strip().lower()
             if tipo_input in tipos_permitidos:
@@ -96,6 +125,8 @@ def cadastrar_informacao(lista):
 
         info = {'Título': titulo, 'Tipo': tipo, 'Descrição': descricao}
         lista.append(info)
+
+        salvar_dados(lista)  # 🔥 IMPORTANTE
 
         carregando('\nSalvando informação')
         print(VERDE + f'\n✅ Informação cadastrada com sucesso! Total: {len(lista)}\n' + RESET)
@@ -120,6 +151,7 @@ def listar_informacoes(lista):
             time.sleep(0.2)
     input('Pressione Enter para voltar ao menu...')
 
+
 def pesquisar_por_tipo(lista):
     limpar_tela()
     print(CIANO + '='*40)
@@ -143,3 +175,76 @@ def pesquisar_por_tipo(lista):
         for i, info in enumerate(resultados, 1):
             print(f'{i}. {info["Título"]} - {info["Descrição"]}')
     input('\nPressione Enter para voltar ao menu...')
+
+
+# -------------------------
+# EDIÇÃO (NOVO)
+# -------------------------
+
+def editar_informacao(lista):
+    if not lista:
+        print("Nenhuma informação cadastrada.")
+        return
+
+    for i, item in enumerate(lista):
+        print(f"{i} - {item['Título']}")
+
+    try:
+        indice = int(input("Escolha o índice para editar: "))
+        if indice < 0 or indice >= len(lista):
+            print("Índice inválido.")
+            return
+    except ValueError:
+        print("Entrada inválida.")
+        return
+
+    info = lista[indice]
+
+    print(f"\nTítulo atual: {info['Título']}")
+    novo_titulo = input("Novo título (Enter para manter): ")
+    if novo_titulo:
+        info['Título'] = novo_titulo
+
+    print(f"Tipo atual: {info['Tipo']}")
+    novo_tipo = input("Novo tipo: ")
+    if novo_tipo.lower() in ['educativo', 'cultural', 'lazer']:
+        info['Tipo'] = novo_tipo.capitalize()
+
+    print(f"Descrição atual: {info['Descrição']}")
+    nova_desc = input("Nova descrição: ")
+    if nova_desc:
+        info['Descrição'] = nova_desc
+
+    salvar_dados(lista)
+    print("✅ Informação atualizada!")
+
+
+# -------------------------
+# EXCLUSÃO (NOVO)
+# -------------------------
+
+def excluir_informacao(lista):
+    if not lista:
+        print("Nenhuma informação cadastrada.")
+        return
+
+    for i, item in enumerate(lista):
+        print(f"{i} - {item['Título']}")
+
+    try:
+        indice = int(input("Escolha o índice para excluir: "))
+        if indice < 0 or indice >= len(lista):
+            print("Índice inválido.")
+            return
+    except ValueError:
+        print("Entrada inválida.")
+        return
+
+    confirmacao = input("Tem certeza? (s/n): ")
+
+    if confirmacao.lower() == "s":
+        lista.pop(indice)
+        salvar_dados(lista)
+        print("🗑️ Excluído com sucesso!")
+    else:
+        print("Cancelado.")
