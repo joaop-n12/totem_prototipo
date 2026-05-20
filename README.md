@@ -178,7 +178,6 @@ Escolha uma opção: 1
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Desenvolvido
 
 **João Pedro de Souza Nunes**
-📚 Projeto desenvolvido para **FIAP – Machine Learning & Python**
